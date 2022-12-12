@@ -22,18 +22,19 @@ app.use(express.json())
 app.use('/api/mqtt', apiMqtt)
 
 app.get('/', (req, res) => {
-  res.json({ message: 'Welcome to Amine application.' })
+  res.json({ message: 'Welcome to DNI application.' })
 })
 if (process.env.NODE_ENV == 'production') {
   app.use(express.static(__dirname + '/dist/'))
   app.get(/.*/, (req, res) => res.sendFile(__dirname + '/dist/index.html'))
 }
 
-const port = process.env.NODE_DOCKER_PORT || 5002
+const port = process.env.NODE_DOCKER_PORT || 5005
 app.listen(port, () => console.log(`Listening on port ${port}...`))
+
 mongoose
   .connect(
-    'mongodb+srv://abouda-mohamed-ibrahim:QLrqOlkLKAdYETbD@cluster0.ankspzf.mongodb.net/test',
+    'mongodb+srv://Amine:amine22102439@vasytn.1gnpw.mongodb.net/test?retryWrites=true&w=majority',
     { useNewUrlParser: true }
   )
   .then(() => {
