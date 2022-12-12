@@ -4,7 +4,7 @@ const apiMqtt = require('./mqtt')
 const cors = require('cors')
 const dotenv = require('dotenv')
 dotenv.config()
-
+const mongoose = require('mongoose')
 app.use(function (req, res, next) {
   res.header('Access-Control-Allow-Credentials', true)
   res.header('Access-Control-Allow-Origin', 'http://localhost/')
@@ -15,6 +15,7 @@ app.use(function (req, res, next) {
   )
   next()
 })
+
 app.use(cors())
 app.use(express.json())
 
@@ -28,5 +29,16 @@ if (process.env.NODE_ENV == 'production') {
   app.get(/.*/, (req, res) => res.sendFile(__dirname + '/dist/index.html'))
 }
 
-const port = process.env.NODE_DOCKER_PORT || 8080
+const port = process.env.NODE_DOCKER_PORT || 5002
 app.listen(port, () => console.log(`Listening on port ${port}...`))
+mongoose
+  .connect(
+    'mongodb+srv://abouda-mohamed-ibrahim:QLrqOlkLKAdYETbD@cluster0.ankspzf.mongodb.net/test',
+    { useNewUrlParser: true }
+  )
+  .then(() => {
+    app.listen(port, () => console.log(`Listening on port ${port}...`))
+  })
+  .catch((err) => {
+    console.log(err)
+  })
